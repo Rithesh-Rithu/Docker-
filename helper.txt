@@ -1,0 +1,50 @@
+FRONTEND
+````````
+FROM node:10.19.0
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+COPY . .
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ] 
+
+
+BACKEND
+```````
+FROM node:10.19.0
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+COPY . .
+
+RUN npm install
+
+EXPOSE 8000
+
+CMD [ "npm", "start" ] 
+
+
+
+
+
+version: '3'
+services:
+        frontend:
+            build: ./frontend
+             
+            ports:
+             - "3000:3000"
+            depends_on:
+             - backend
+        backend:
+            build: ./backend
+            ports:
+             - "8000:8000"
